@@ -1,9 +1,5 @@
 # moving-to-docker-compose
 
-Excellent!!
-
-### Development
-
 Clone the project and move inside:
 ```shell
 git clone https://github.com/mopinion/moving-to-docker-compose.git
