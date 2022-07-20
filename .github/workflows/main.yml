@@ -1,0 +1,34 @@
+ 
+name: CI
+
+# Run on PR requests. And on master itself.
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+# A workflow run is made up of one or more jobs that can run sequentially or
+# in parallel
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Build docker
+        run: docker-compose build
+
+      - name: Install python packages
+        run: docker-compose run --rm --no-deps app poetry install
+
+      - name: Check your installed dependencies for security vulnerabilities
+        run: docker-compose run --rm app poetry check
+
+      - name: Test
+        run: docker-compose run --rm app poetry run pytest --disable-warnings
+
+      - name: Flake8
+        run: if docker-compose run --rm app poetry run flake8 app > flake8.txt; then echo 'flake8 is a success'; else cat flake8.txt; false; fi
