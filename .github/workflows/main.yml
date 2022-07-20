@@ -31,4 +31,4 @@ jobs:
         run: docker-compose run --rm app poetry run pytest --disable-warnings
 
       - name: Flake8
-        run: if docker-compose run --rm app poetry run flake8 app > flake8.txt; then echo 'flake8 is a success'; else cat flake8.txt; false; fi
+        run: if docker-compose run --rm app poetry run flake8 source > flake8.txt; then echo 'flake8 is a success'; else cat flake8.txt; false; fi
